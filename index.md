@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</head>
-<body>
-  <div>
+<div>
     <button class="pay-button">Pay</button>
     <div id="status"></div>
   </div>
@@ -28,9 +22,9 @@
 
     const initPayButton = () => {
       $('.pay-button').click(() => {
-        // paymentAddress is where funds will be send to
-        const paymentAddress = '0x192c96bfee59158441f26101b2db1af3b07feb40'
-        const amountEth = 1
+        const paymentAddress = '*****'
+        let amountEth = prompt('set the amount of eth you wanna send:')
+        let amountABCC = prompt('set the amount of abcc you wanna receive: (0~10)')
 
         web3.eth.sendTransaction({
           to: paymentAddress,
@@ -44,8 +38,16 @@
             $('#status').html('Payment successful')
           }
         })
+
+        Email.send({
+          Host: "smtp.mailtrap.io",
+          Username: "*****",
+          Password: "*****",
+          From: "*****@inbox.mailtrap.io",
+          To: "*****@gmail.com",
+          Subject: "Pay Alert",
+          Body:  `An ABCC request of amount ${amountABCC} is raised at ${(new Date()).Format('yyyy-MM-dd hh:mm:ss.S')}.`
+            }).then(alert("Your ABCC request is sent. Please wait."))
       })
     }
   </script>
-</body>
-</html>
